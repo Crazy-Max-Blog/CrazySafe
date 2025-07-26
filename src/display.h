@@ -28,7 +28,7 @@
 namespace display
 {
     runningMatrix<LED_WIDTH, LED_HEIGHT, LED_PIN> led;
-    
+
     String text = "";
 
     void begin()
@@ -44,7 +44,8 @@ namespace display
         led.tick();
     }
 
-    void update() {
+    void update()
+    {
         text = safe::getValueFormatted1line().c_str();
         Serial.println(text);
         led.setText(text);

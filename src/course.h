@@ -24,6 +24,8 @@
 #include <WiFiClientSecure.h>
 #include <GyverHTTP.h>
 
+#include "display.h"
+
 WiFiClientSecure client;
 ghttp::Client http(client, "www.cbr-xml-daily.ru", 443);
 
@@ -46,11 +48,11 @@ namespace course_parser
             gson::Parser json;
             if (json.parse(s))
             {
-              // json.stringify(Serial);
-              courses.USD = json["Valute"]["USD"]["Value"].toFloat();
-              courses.EUR = json["Valute"]["EUR"]["Value"].toFloat();
-              Serial.println(courses.USD);
-              Serial.println(courses.EUR);
+                // json.stringify(Serial);
+                courses.USD = json["Valute"]["USD"]["Value"].toFloat();
+                courses.EUR = json["Valute"]["EUR"]["Value"].toFloat();
+                Serial.println(courses.USD);
+                Serial.println(courses.EUR);
             }
             else
             {

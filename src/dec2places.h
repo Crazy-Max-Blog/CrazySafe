@@ -39,16 +39,17 @@ public:
     void set(su::Value value)
     {
         byte c = value.count('.') - 1;
-        if(c == 0) _value = su::strToInt<uint64_t>(value.c_str()) * 100;
-        else if (c == 1) {
+        if (c == 0)
+            _value = su::strToInt<uint64_t>(value.c_str()) * 100;
+        else if (c == 1)
             _value = su::strToInt<uint64_t>(value.getSub(0, '.').c_str()) * 100 + value.substring(value.indexOf('.') + 1, min(uint16_t(value.indexOf('.') + 3), value.length())).toInt();
-        }
     }
 
     dec2places() {}
     dec2places(Value value) { set(value); }
 
-    dec2places& operator=(const su::Value& v) {
+    dec2places &operator=(const su::Value &v)
+    {
         set(v);
         return *this;
     }
@@ -57,116 +58,134 @@ public:
     {
         StringN<21> _val = "";
         su::Value value1 = _value;
-        for(byte i = 0; i < byte(max(int(3 - value1.length()), 0)); i++) _val += "0";
+        for (byte i = 0; i < byte(max(int(3 - value1.length()), 0)); i++)
+            _val += "0";
         _val += _value;
         su::Value value = _val.c_str();
         return su::Text(StringN<21>(value.substring(0, value.length() - 2).c_str()) + "." + value.substring(value.length() - 2, value.length()).c_str());
     }
 
-    operator su::Text() {
+    operator su::Text()
+    {
         return toString();
     }
 
     // operator +
-    dec2places& operator+=(const su::Value& v) {
+    dec2places &operator+=(const su::Value &v)
+    {
         _value += dec2places(v)._value;
         return *this;
     }
 
-    dec2places& operator+=(const dec2places& v) {
+    dec2places &operator+=(const dec2places &v)
+    {
         _value += v._value;
         return *this;
     }
 
-    dec2places& operator+(const su::Value& v) {
-        dec2places* o = new dec2places();
+    dec2places &operator+(const su::Value &v)
+    {
+        dec2places *o = new dec2places();
         o->_value = _value;
         *o += v;
         return *o;
     }
 
-    dec2places& operator+(const dec2places& v) {
-        dec2places* o = new dec2places();
+    dec2places &operator+(const dec2places &v)
+    {
+        dec2places *o = new dec2places();
         o->_value = _value;
         *o += v;
         return *o;
     }
 
     // operator -
-    dec2places& operator-=(const su::Value& v) {
+    dec2places &operator-=(const su::Value &v)
+    {
         _value -= dec2places(v)._value;
         return *this;
     }
 
-    dec2places& operator-=(const dec2places& v) {
+    dec2places &operator-=(const dec2places &v)
+    {
         _value -= v._value;
         return *this;
     }
 
-    dec2places& operator-(const su::Value& v) {
-        dec2places* o = new dec2places();
+    dec2places &operator-(const su::Value &v)
+    {
+        dec2places *o = new dec2places();
         o->_value = _value;
         *o -= v;
         return *o;
     }
 
-    dec2places& operator-(const dec2places& v) {
-        dec2places* o = new dec2places();
+    dec2places &operator-(const dec2places &v)
+    {
+        dec2places *o = new dec2places();
         o->_value = _value;
         *o -= v;
         return *o;
     }
 
     // operator *
-    dec2places& operator*=(const su::Value& v) {
+    dec2places &operator*=(const su::Value &v)
+    {
         _value = _value * uint64_t(v.toFloat() * 100) / 100;
         return *this;
     }
 
-    dec2places& operator*=(const dec2places& v) {
+    dec2places &operator*=(const dec2places &v)
+    {
         _value = _value * uint64_t(v._value) / 100;
         return *this;
     }
 
-    dec2places& operator*(const su::Value& v) {
-        dec2places* o = new dec2places();
+    dec2places &operator*(const su::Value &v)
+    {
+        dec2places *o = new dec2places();
         o->_value = _value;
         *o *= v;
         return *o;
     }
 
-    dec2places& operator*(const dec2places& v) {
-        dec2places* o = new dec2places();
+    dec2places &operator*(const dec2places &v)
+    {
+        dec2places *o = new dec2places();
         o->_value = _value;
         *o *= v;
         return *o;
     }
 
     // operator /
-    dec2places& operator/=(const su::Value& v) {
+    dec2places &operator/=(const su::Value &v)
+    {
         _value = _value * 100 / dec2places(v)._value;
         return *this;
     }
 
-    dec2places& operator/=(const dec2places& v) {
+    dec2places &operator/=(const dec2places &v)
+    {
         _value = _value * 100 / v._value;
         return *this;
     }
 
-    dec2places& operator/(const su::Value& v) {
-        dec2places* o = new dec2places();
+    dec2places &operator/(const su::Value &v)
+    {
+        dec2places *o = new dec2places();
         o->_value = _value;
         *o /= v;
         return *o;
     }
 
-    dec2places& operator/(const dec2places& v) {
-        dec2places* o = new dec2places();
+    dec2places &operator/(const dec2places &v)
+    {
+        dec2places *o = new dec2places();
         o->_value = _value;
         *o /= v;
         return *o;
     }
 
-//private:
+    // private:
     uint64_t _value = 0;
 };
