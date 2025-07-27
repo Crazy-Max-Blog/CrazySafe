@@ -36,7 +36,9 @@ namespace display
         led.color = CRGB::Green;
         led.setSpeed(13);
         led.start();
-        update();
+        for (int i = 0; i < byte(LED_WIDTH / 8); i++)
+            led.drawBytes_P(GFX_icons::wifi, 8);
+        led.update();
     }
 
     void tick()
@@ -46,6 +48,7 @@ namespace display
 
     void update()
     {
+        led.clear();
         text = safe::getValueFormatted1line().c_str();
         Serial.println(text);
         led.setText(text);

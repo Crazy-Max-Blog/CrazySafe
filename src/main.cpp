@@ -29,9 +29,9 @@ void setup()
     Serial.begin(115200);
     Serial.println();
 
+    display::begin();
     wifi::connect();
     tg::begin();
-    display::begin();
     course_parser::get();
 }
 
